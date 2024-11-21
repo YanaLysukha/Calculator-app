@@ -26,23 +26,49 @@ const keysConfig = [
 ];
 
 export default class Keys extends BaseElement<HTMLElement> {
+    private button!: BaseElement<HTMLButtonElement>;
+
     constructor(props: KeysProps) {
         super({ tag: 'div', class: 'keys-container', ...props });
         this.createKeys();
+        this.onClickHandler();
     }
 
     private createKeys = () => {
         keysConfig.forEach((key) => {
-            const button = new BaseElement<HTMLButtonElement>({ tag: 'button' });
-            button.node.textContent = key.label;
-            this.node.append(button.node);
+            this.button = new BaseElement<HTMLButtonElement>({ tag: 'button' });
+            this.button.node.textContent = key.label;
+            this.node.append(this.button.node);
             if (key.type === 'operator' && key.action) {
-                button.node.classList.add('key-operator');
-                button.node.setAttribute('data-action', key.action);
+                this.button.node.classList.add('key-operator');
+                this.button.node.setAttribute('data-action', key.action);
             }
             if (key.label === '0') {
-                button.node.classList.add('zero-number');
+                this.button.node.classList.add('zero-number');
             }
         });
+    }
+
+    private onClickHandler = () => {
+        this.node.addEventListener('click', (e) => {
+            // позже заменить
+            const display = document.querySelector('.display-container') as HTMLElement;
+            const displayedNumber = display?.textContent ?? '0';
+            
+            const target = e.target as HTMLElement;
+
+            if (target.tagName === 'BUTTON') {
+                const action = target.dataset.action;
+                const content = target.textContent;
+                if (!action) {
+                    display.textContent = content;
+                    if (displayedNumber && displayedNumber === '0') {
+                        display.textContent = content;
+                    } else {
+                        display.textContent = displayedNumber + content;
+                    }
+                }
+            }
+        })
     }
 }
