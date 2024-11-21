@@ -1,0 +1,9 @@
+.keys-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    max-width: 400px;
+}
+
+button.zero-number {
+    grid-column: span 2;
+}
