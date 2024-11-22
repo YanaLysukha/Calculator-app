@@ -1,4 +1,4 @@
-import BaseElement from "../base-component";
+import BaseElement from '../base-component';
 import './style.scss';
 
 export default class Display extends BaseElement<HTMLElement> {
@@ -8,5 +8,5 @@ export default class Display extends BaseElement<HTMLElement> {
 
     getValue = () => {
         return this.node.textContent;
-    }
+    };
 }

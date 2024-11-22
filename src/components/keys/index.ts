@@ -1,4 +1,4 @@
-import BaseElement, { ElementProps } from "../base-component";
+import BaseElement, { ElementProps } from '../base-component';
 import './style.scss';
 
 type KeysProps = Omit<ElementProps<HTMLElement>, 'tag'>;
@@ -47,14 +47,14 @@ export default class Keys extends BaseElement<HTMLElement> {
                 this.button.node.classList.add('zero-number');
             }
         });
-    }
+    };
 
     private onClickHandler = () => {
         this.node.addEventListener('click', (e) => {
             // позже заменить
             const display = document.querySelector('.display-container') as HTMLElement;
             const displayedNumber = display?.textContent ?? '0';
-            
+
             const target = e.target as HTMLElement;
 
             if (target.tagName === 'BUTTON') {
@@ -67,8 +67,23 @@ export default class Keys extends BaseElement<HTMLElement> {
                     } else {
                         display.textContent = displayedNumber + content;
                     }
+                } else if (
+                    action === 'division' ||
+                    action === 'multiplication' ||
+                    action === 'subtraction' ||
+                    action === 'addition' ||
+                    action === 'percent'
+                ) {
+                    if (action === 'subtraction' || display.textContent !== '') {
+                        display.textContent = displayedNumber + content;
+                    } else {
+                        display.textContent = '';
+                    }
+                }
+                if (action === 'decimal') {
+                    display.textContent = displayedNumber + '.';
                 }
             }
-        })
-    }
+        });
+    };
 }
