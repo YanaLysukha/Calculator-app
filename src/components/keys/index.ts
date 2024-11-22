@@ -97,7 +97,57 @@ export default class Keys extends BaseElement<HTMLElement> {
                     display.textContent = displayedNumber + '.';
                 }
                 this.previousSign = this.currentSign;
+                if (action === 'calculation') {
+                    const expressionParts = displayedNumber.split(' ');
+                    display.textContent = this.calculateNew(...expressionParts).toString();
+                }
             }
         });
     };
+
+    calculateNew = (...params: string[]) => {
+        let result: number = 0;
+        let num1: string = '';
+        let num2: string;
+        let operator: string = '';
+        for (let i = 0; i < params.length; i += 2) {
+            if(!isNaN(Number(params[i]))) {
+                num1 = params[i];
+                console.log('num1', num1);
+            }
+            if (isNaN(Number(params[i + 1]))) {
+                operator = params[i + 1];
+                console.log('operator', params[i + 1]);
+            }
+            if (!isNaN(Number(params[i + 2]))) {
+                num2 = params[i + 2];
+                console.log('num2', num2);
+                const currentResult = this.calculate(num1, operator, num2);
+                result += currentResult;
+            }
+        } 
+        return result;
+    }
+
+    calculate = (num1: string, operator: string, num2: string) => {
+        let result = 0;
+
+        switch (operator) {
+            case '-':
+                result = parseFloat(num1) - parseFloat(num2);
+                break;
+            case '+':
+                result = parseFloat(num1) + parseFloat(num2);
+                break;
+            case '*':
+                result = parseFloat(num1) * parseFloat(num2);
+                break;
+            case '÷':
+                result = parseFloat(num1) / parseFloat(num2);
+            default:
+                console.log(`${result} - Such an operator does not exist!`);
+        }
+
+        return result;
+    }
 }
