@@ -68,10 +68,7 @@ export default class Calculator {
     }
 
     putDecimal = () => {
-        console.log('.');
-        // const display = document.querySelector('.display-container') as HTMLElement;
-        // const displayedNumber = display?.textContent ?? '0';
-        // display.textContent = displayedNumber + '.';
+        this.data += '.';
     }
 
     getData = () => {
@@ -140,24 +137,4 @@ export default class Calculator {
     //     return result;
     // }
 }
-
-
-// const calculator = new Calculator();
-// calculator.putNumber(1);
-// calculator.putOperator(+);
-// calculator.putNumber(2);
-// calculator.getData() == "1 + 2";
-
-// const calculator = new Calculator();
-// calculator.putNumber(1);
-// calculator.putOperator(+);
-// calculator.putNumber(2);
-// calculator.putOperator(=);
-// calculator.getData() == "3";
-
-// const calculator = new Calculator();
-// calculator.putNumber(1);
-// calculator.putOperator(+);
-// calculator.putOperator(*);
-// calculator.getData() == "1 *";
 

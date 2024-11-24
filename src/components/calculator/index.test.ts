@@ -25,5 +25,14 @@ describe('calculator module', () => {
             calculator.putNumber(3);
             expect(calculator.getData()).toBe('3');
         })
+    });
+
+    describe('check putDecimal method', () => {
+        test('should append the decimal correctly', () => {
+            calculator.putNumber(0);
+            calculator.putDecimal();
+            calculator.putNumber(2);
+            expect(calculator.getData()).toBe('0.2');
+        })
     })
 })
