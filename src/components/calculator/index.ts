@@ -1,3 +1,6 @@
+type Operators = '+' | '-' | '*' | '%' | '/';
+const operatorsArr = ['+', '-', '*', '%', '/'];
+
 export default class Calculator {
     static #instance: Calculator;
 
@@ -30,45 +33,25 @@ export default class Calculator {
         }
     }
 
-    checkFirstNumber = () => {
+    private checkFirstNumber = () => {
        return this.data === '0'; 
     }
 
-    putOperator = (operator: string) => {
-        console.log(operator);
-        // const display = document.querySelector('.display-container') as HTMLElement;
-        // const displayedNumber = display?.textContent ?? '0';
-        // if (operators.includes(this.previousSign) && operators.includes(this.currentSign)) {
-        //     // replace operators
-        //     const begin = displayedNumber.slice(0, displayedNumber.length-1);
-        //     display.textContent = '';
-        //     display.textContent = begin + this.currentSign;
-        // } else {
-        //     display.textContent = displayedNumber + this.currentSign;
-        // }
-        // this.previousSign = this.currentSign;
-
-
-        // const display = document.querySelector('.display-container') as HTMLElement;
-        // const displayedNumber = display?.textContent ?? '0';
-    
-        // if (display.textContent !== '') {
-        //     if (operators.includes(this.previousSign) && operators.includes(this.currentSign)) {
-        //         // replace operators
-        //         const begin = displayedNumber.slice(0, displayedNumber.length-1);
-        //         display.textContent = '';
-        //         display.textContent = begin + this.currentSign;
-        //     } else {
-        //         display.textContent = displayedNumber + this.currentSign;
-        //     }
-        // } else {
-        //     display.textContent = '';
-        // }
-        // this.previousSign = this.currentSign;
+    putOperator = (operator: Operators) => {
+        const lastCharIndex = this.data.length - 1;
+        const firstPartOfData = this.data.slice(0, lastCharIndex);
+        if (operatorsArr.includes(this.data[lastCharIndex])) {
+            this.data = '';
+            this.data = firstPartOfData + operator;
+        } else {
+            this.data += operator;
+        }
     }
 
     putDecimal = () => {
-        this.data += '.';
+        if (this.data[this.data.length - 1] !== '.') {
+            this.data += '.';
+        }
     }
 
     getData = () => {
