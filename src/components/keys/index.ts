@@ -56,6 +56,9 @@ export default class Keys extends BaseElement<HTMLElement> {
             if (key.label === '0') {
                 this.button.node.classList.add('zero-number');
             }
+            if (key.action === 'calculation') {
+                this.button.node.addEventListener('click', this.calculateResult);
+            }
         });
     };
 
@@ -103,17 +106,18 @@ export default class Keys extends BaseElement<HTMLElement> {
                     display.textContent = displayedNumber + '.';
                 }
                 this.previousSign = this.currentSign;
-                this.calculateResult();
+                if (action === 'calculation') {
+                    return;
+                }
             }
         });
     };
 
     calculateResult = () => {
-        if (action === 'calculation') {
-            const expressionParts = displayedNumber.split(' ');
-            display.textContent = this.calculateNew(...expressionParts).toString();   
-        }
-        
+        const display = document.querySelector('.display-container') as HTMLElement;
+        const displayedNumber = display?.textContent ?? '0';
+        const expressionParts = displayedNumber.split(' ');
+        display.textContent = this.calculateNew(...expressionParts).toString(); 
     }
 
     calculateNew = (...params: string[]) => {
