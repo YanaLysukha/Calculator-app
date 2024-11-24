@@ -9,19 +9,19 @@ const keysConfig = [
     { type: 'operator', label: ' +/- ', action: 'sign change' },
     { type: 'operator', label: ' % ', action: 'percent' },
     { type: 'operator', label: ' ÷ ', action: 'division' },
-    { type: 'number', label: '7' },
-    { type: 'number', label: '8' },
-    { type: 'number', label: '9' },
+    { type: 'number', label: '7', action: '7' },
+    { type: 'number', label: '8', action: '8' },
+    { type: 'number', label: '9', action: '9' },
     { type: 'operator', label: ' * ', action: 'multiplication' },
-    { type: 'number', label: '4' },
-    { type: 'number', label: '5' },
-    { type: 'number', label: '6' },
+    { type: 'number', label: '4', action: '4' },
+    { type: 'number', label: '5', action: '5' },
+    { type: 'number', label: '6', action: '6' },
     { type: 'operator', label: ' - ', action: 'subtraction' },
-    { type: 'number', label: '1' },
-    { type: 'number', label: '2' },
-    { type: 'number', label: '3' },
+    { type: 'number', label: '1', action: '1' },
+    { type: 'number', label: '2', action: '2' },
+    { type: 'number', label: '3', action: '3' },
     { type: 'operator', label: ' + ', action: 'addition' },
-    { type: 'number', label: '0' },
+    { type: 'number', label: '0', action: '0' },
     { type: 'operator', label: '.', action: 'decimal' },
     { type: 'operator', label: '=', action: 'calculation' },
 ];
@@ -56,23 +56,42 @@ export default class Keys extends BaseElement<HTMLElement> {
             if (key.label === '0') {
                 this.button.node.classList.add('zero-number');
             }
-            if (key.action === 'calculation') {
-                this.button.node.addEventListener('click', this.calculateResult);
-            }
-            if (key.action === 'decimal') {
-                this.button.node.addEventListener('click', this.addDecimal);
-            }
-            if (key.action === 'subtraction') {
-                this.button.node.addEventListener('click', this.checkSubtraction);
-            }
+            this.addOnclickHandlers(key, 'calculation', this.calculateResult);
+            this.addOnclickHandlers(key, 'decimal',  this.addDecimal);
+            this.addOnclickHandlers(key, 'subtraction',  this.checkSubtraction);
+            this.addOnclickHandlers(key, 'division', this.checkOperator);
+            this.addOnclickHandlers(key, 'multiplication', this.checkOperator);
+            this.addOnclickHandlers(key, 'addition', this.checkOperator);
+            this.addOnclickHandlers(key, 'percent', this.checkOperator);
+            this.addOnclickHandlers(key, '0', this.addNumber);
+            this.addOnclickHandlers(key, '1', this.addNumber);
+            this.addOnclickHandlers(key, '2', this.addNumber);
+            this.addOnclickHandlers(key, '3', this.addNumber);
+            this.addOnclickHandlers(key, '4', this.addNumber);
+            this.addOnclickHandlers(key, '5', this.addNumber);
+            this.addOnclickHandlers(key, '6', this.addNumber);
+            this.addOnclickHandlers(key, '7', this.addNumber);
+            this.addOnclickHandlers(key, '8', this.addNumber);
+            this.addOnclickHandlers(key, '9', this.addNumber);
         });
     };
 
+    addOnclickHandlers = (key: {
+        type: string;
+        label: string;
+        action: string;
+    } | {
+        type: string;
+        label: string;
+        action?: undefined;
+    }, action: string, handler: () => void) => {
+        if (key.action === action) {
+            this.button.node.addEventListener('click', handler);
+        }
+    }
+
     private onClickHandler = () => {
         this.node.addEventListener('click', (e) => {
-            const display = document.querySelector('.display-container') as HTMLElement;
-            const displayedNumber = display?.textContent ?? '0';
-
             // this.calculator.putNumber(2);
 
             const target = e.target as HTMLElement;
@@ -82,31 +101,14 @@ export default class Keys extends BaseElement<HTMLElement> {
                 this.currentSign = target.textContent ?? '';
 
                 if (!action) {
-                    display.textContent = this.currentSign;
-                    if (displayedNumber && displayedNumber === '0') {
-                        display.textContent = this.currentSign;
-                    } else {
-                        display.textContent = displayedNumber + this.currentSign;
-                    }
+                    return;
                 } else if (
                     action === 'division' ||
                     action === 'multiplication' ||
-                    // action === 'subtraction' ||
                     action === 'addition' ||
                     action === 'percent'
                 ) {
-                    if (display.textContent !== '') {
-                        if (operators.includes(this.previousSign) && operators.includes(this.currentSign)) {
-                            // replace operators
-                            const begin = displayedNumber.slice(0, displayedNumber.length-1);
-                            display.textContent = '';
-                            display.textContent = begin + this.currentSign;
-                        } else {
-                            display.textContent = displayedNumber + this.currentSign;
-                        }
-                    } else {
-                        display.textContent = '';
-                    }
+                    return;
                 }
                 if (action === 'decimal') {
                     return;
@@ -121,6 +123,34 @@ export default class Keys extends BaseElement<HTMLElement> {
             }
         });
     };
+
+    addNumber = () => {
+        const display = document.querySelector('.display-container') as HTMLElement;
+        const displayedNumber = display?.textContent ?? '0';
+        display.textContent = this.currentSign;
+        if (displayedNumber && displayedNumber === '0') {
+            display.textContent = this.currentSign;
+        } else {
+            display.textContent = displayedNumber + this.currentSign;
+        }
+    }
+
+    checkOperator = () => {
+        const display = document.querySelector('.display-container') as HTMLElement;
+        const displayedNumber = display?.textContent ?? '0';
+        if (display.textContent !== '') {
+            if (operators.includes(this.previousSign) && operators.includes(this.currentSign)) {
+                // replace operators
+                const begin = displayedNumber.slice(0, displayedNumber.length-1);
+                display.textContent = '';
+                display.textContent = begin + this.currentSign;
+            } else {
+                display.textContent = displayedNumber + this.currentSign;
+            }
+        } else {
+            display.textContent = '';
+        }
+    }
 
     checkSubtraction = () => {
         const display = document.querySelector('.display-container') as HTMLElement;
