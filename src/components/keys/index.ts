@@ -1,4 +1,5 @@
 import BaseElement, { ElementProps } from '../base-component';
+import Calculator from '../calculator';
 import './style.scss';
 
 type KeysProps = Omit<ElementProps<HTMLElement>, 'tag'>;
@@ -34,10 +35,13 @@ export default class Keys extends BaseElement<HTMLElement> {
 
     private previousSign!: string;
 
+    private calculator: Calculator;
+
     constructor(props: KeysProps) {
         super({ tag: 'div', class: 'keys-container', ...props });
         this.createKeys();
         this.onClickHandler();
+        this.calculator = Calculator.getInstance();
     }
 
     private createKeys = () => {
@@ -59,6 +63,8 @@ export default class Keys extends BaseElement<HTMLElement> {
         this.node.addEventListener('click', (e) => {
             const display = document.querySelector('.display-container') as HTMLElement;
             const displayedNumber = display?.textContent ?? '0';
+
+            // this.calculator.putNumber(2);
 
             const target = e.target as HTMLElement;
 
@@ -97,13 +103,18 @@ export default class Keys extends BaseElement<HTMLElement> {
                     display.textContent = displayedNumber + '.';
                 }
                 this.previousSign = this.currentSign;
-                if (action === 'calculation') {
-                    const expressionParts = displayedNumber.split(' ');
-                    display.textContent = this.calculateNew(...expressionParts).toString();
-                }
+                this.calculateResult();
             }
         });
     };
+
+    calculateResult = () => {
+        if (action === 'calculation') {
+            const expressionParts = displayedNumber.split(' ');
+            display.textContent = this.calculateNew(...expressionParts).toString();   
+        }
+        
+    }
 
     calculateNew = (...params: string[]) => {
         let result: number = 0;
