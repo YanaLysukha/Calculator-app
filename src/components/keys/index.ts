@@ -59,6 +59,12 @@ export default class Keys extends BaseElement<HTMLElement> {
             if (key.action === 'calculation') {
                 this.button.node.addEventListener('click', this.calculateResult);
             }
+            if (key.action === 'decimal') {
+                this.button.node.addEventListener('click', this.addDecimal);
+            }
+            if (key.action === 'subtraction') {
+                this.button.node.addEventListener('click', this.checkSubtraction);
+            }
         });
     };
 
@@ -85,11 +91,11 @@ export default class Keys extends BaseElement<HTMLElement> {
                 } else if (
                     action === 'division' ||
                     action === 'multiplication' ||
-                    action === 'subtraction' ||
+                    // action === 'subtraction' ||
                     action === 'addition' ||
                     action === 'percent'
                 ) {
-                    if (action === 'subtraction' || display.textContent !== '') {
+                    if (display.textContent !== '') {
                         if (operators.includes(this.previousSign) && operators.includes(this.currentSign)) {
                             // replace operators
                             const begin = displayedNumber.slice(0, displayedNumber.length-1);
@@ -103,7 +109,10 @@ export default class Keys extends BaseElement<HTMLElement> {
                     }
                 }
                 if (action === 'decimal') {
-                    display.textContent = displayedNumber + '.';
+                    return;
+                }
+                if (action === 'subtraction') {
+                    return;
                 }
                 this.previousSign = this.currentSign;
                 if (action === 'calculation') {
@@ -112,6 +121,25 @@ export default class Keys extends BaseElement<HTMLElement> {
             }
         });
     };
+
+    checkSubtraction = () => {
+        const display = document.querySelector('.display-container') as HTMLElement;
+        const displayedNumber = display?.textContent ?? '0';
+        if (operators.includes(this.previousSign) && operators.includes(this.currentSign)) {
+            // replace operators
+            const begin = displayedNumber.slice(0, displayedNumber.length-1);
+            display.textContent = '';
+            display.textContent = begin + this.currentSign;
+        } else {
+            display.textContent = displayedNumber + this.currentSign;
+        }
+    }
+
+    addDecimal = () => {
+        const display = document.querySelector('.display-container') as HTMLElement;
+        const displayedNumber = display?.textContent ?? '0';
+        display.textContent = displayedNumber + '.';
+    }
 
     calculateResult = () => {
         const display = document.querySelector('.display-container') as HTMLElement;
