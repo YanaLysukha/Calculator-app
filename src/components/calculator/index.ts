@@ -1,4 +1,4 @@
-type Operators = '+' | '-' | '*' | '%' | '/';
+export type Operators = '+' | '-' | '*' | '%' | '/';
 const operatorsArr = ['+', '-', '*', '%', '/'];
 
 export default class Calculator {
@@ -21,16 +21,22 @@ export default class Calculator {
         return Calculator.#instance;
     }
 
+    private callListeners = () => {
+        this.listeners.forEach((listener) => listener(this.getData()));
+    }
+
     addListener = (method: (str: string) => void) => {
         this.listeners.push(method);
     }
 
     putNumber = (num: number) => {
+        console.log(num);
         if (this.checkFirstNumber()) {
             this.data = num.toString();
         } else {
             this.data += num;
         }
+        this.callListeners();
     }
 
     private checkFirstNumber = () => {
@@ -46,12 +52,14 @@ export default class Calculator {
         } else {
             this.data += operator;
         }
+        this.callListeners();
     }
 
     putDecimal = () => {
         if (this.data[this.data.length - 1] !== '.') {
             this.data += '.';
         }
+        this.callListeners();
     }
 
     getData = () => {
@@ -68,6 +76,7 @@ export default class Calculator {
 
     reset = () => {
         this.data = '';
+        this.callListeners();
     }
 
     invertSign = () => {
@@ -78,6 +87,7 @@ export default class Calculator {
         const invertedNumber = Number(lastNumber) < 0 ? -Number(lastNumber) : Number(lastNumber);
         this.data = '';
         this.data = `${firstPart.join(' ')} ${invertedNumber}`;
+        this.callListeners();
     }
 
     // calculateNew = (...params: string[]) => {
