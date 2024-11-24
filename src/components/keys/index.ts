@@ -1,14 +1,12 @@
-import BaseElement, { ElementProps } from '../base-component';
+import BaseElement from '../base-component';
 import Calculator from '../calculator';
 import './style.scss';
-
-type KeysProps = Omit<ElementProps<HTMLElement>, 'tag'>;
 
 export default class Keys extends BaseElement<HTMLElement> {
     private calculator: Calculator;
 
-    constructor(props: KeysProps) {
-        super({ tag: 'div', class: 'keys-container', ...props });
+    constructor() {
+        super({ tag: 'div', class: 'keys-container' });
         this.createKeys();
         this.calculator = Calculator.getInstance();
     }

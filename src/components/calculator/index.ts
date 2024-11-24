@@ -13,7 +13,7 @@ export default class Calculator {
         return Calculator.#instance;
     }
 
-    putNumber = (num: Numbers) => {
+    putNumber = (num: number) => {
         console.log(num);
         // const display = document.querySelector('.display-container') as HTMLElement;
         // const displayedNumber = display?.textContent ?? '0';
@@ -25,7 +25,7 @@ export default class Calculator {
         // }
     }
 
-    putOperator = (operator: Operators) => {
+    putOperator = (operator: string) => {
         console.log(operator);
         // const display = document.querySelector('.display-container') as HTMLElement;
         // const displayedNumber = display?.textContent ?? '0';
@@ -124,21 +124,6 @@ export default class Calculator {
     // }
 }
 
-class Numbers {}
-
-class Operators {}
-
-export class Display {
-    calculator: Calculator;
-
-    constructor(calculator: Calculator) {
-        this.calculator = calculator;
-    }
-
-    show = () => {
-        console.log(this.calculator.getData());
-    }
-}
 
 // const calculator = new Calculator();
 // calculator.putNumber(1);
