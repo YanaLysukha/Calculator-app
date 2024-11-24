@@ -63,4 +63,11 @@ describe('calculator module', () => {
             expect(calculator.getData()).toBe('2+5');
         })
     });
+
+    // describe('check invertSign method', () => {
+    //     test('should invert sign correctly', () => {
+    //         calculator.putNumber(23);
+    //         calculator.putOperator('+')
+    //     })
+    // })
 })

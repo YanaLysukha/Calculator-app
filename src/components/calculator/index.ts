@@ -42,7 +42,7 @@ export default class Calculator {
         const firstPartOfData = this.data.slice(0, lastCharIndex);
         if (operatorsArr.includes(this.data[lastCharIndex])) {
             this.data = '';
-            this.data = firstPartOfData + operator;
+            this.data = firstPartOfData + ' ' + operator + ' ';
         } else {
             this.data += operator;
         }
@@ -71,7 +71,13 @@ export default class Calculator {
     }
 
     invertSign = () => {
-        console.log('invert');
+        const dataToArr = this.data.split(' ');
+        const lastIndex = dataToArr.length - 1;
+        const firstPart = dataToArr.slice(0, lastIndex);
+        const lastNumber = dataToArr[lastIndex];
+        const invertedNumber = Number(lastNumber) < 0 ? -Number(lastNumber) : Number(lastNumber);
+        this.data = '';
+        this.data = `${firstPart.join(' ')} ${invertedNumber}`;
     }
 
     // calculateNew = (...params: string[]) => {
