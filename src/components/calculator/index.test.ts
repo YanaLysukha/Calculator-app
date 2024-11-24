@@ -1,4 +1,4 @@
-import Calculator from ".";
+import Calculator from '.';
 
 describe('calculator module', () => {
     let calculator: Calculator;
@@ -24,7 +24,7 @@ describe('calculator module', () => {
             calculator.putNumber(0);
             calculator.putNumber(3);
             expect(calculator.getData()).toBe('3');
-        })
+        });
     });
 
     describe('check putDecimal method', () => {
@@ -42,7 +42,7 @@ describe('calculator module', () => {
             calculator.putDecimal();
             calculator.putNumber(2);
             expect(calculator.getData()).toBe('1.2');
-        })
+        });
     });
 
     describe('check putOperator method', () => {
@@ -53,7 +53,7 @@ describe('calculator module', () => {
             calculator.putOperator('-');
             calculator.putNumber(2);
             expect(calculator.getData()).toBe('1.5-2');
-        })
+        });
 
         test('should replace operator instead of another', () => {
             calculator.putNumber(2);
@@ -61,7 +61,7 @@ describe('calculator module', () => {
             calculator.putOperator('+');
             calculator.putNumber(5);
             expect(calculator.getData()).toBe('2+5');
-        })
+        });
     });
 
     // describe('check invertSign method', () => {
@@ -70,4 +70,4 @@ describe('calculator module', () => {
     //         calculator.putOperator('+')
     //     })
     // })
-})
+});

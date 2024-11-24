@@ -12,7 +12,7 @@
         "skipLibCheck": true,
         "sourceMap": true,
         "paths": {
-            "@Src/*": ["./src/*"],
+            "@Src/*": ["./src/*"]
         }
     },
     "ts-node": {

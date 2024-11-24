@@ -23,11 +23,11 @@ export default class Calculator {
 
     private callListeners = () => {
         this.listeners.forEach((listener) => listener(this.getData()));
-    }
+    };
 
     addListener = (method: (str: string) => void) => {
         this.listeners.push(method);
-    }
+    };
 
     putNumber = (num: number) => {
         console.log(num);
@@ -37,11 +37,11 @@ export default class Calculator {
             this.data += num;
         }
         this.callListeners();
-    }
+    };
 
     private checkFirstNumber = () => {
-       return this.data === '0'; 
-    }
+        return this.data === '0';
+    };
 
     putOperator = (operator: Operators) => {
         const lastCharIndex = this.data.length - 1;
@@ -53,31 +53,31 @@ export default class Calculator {
             this.data += operator;
         }
         this.callListeners();
-    }
+    };
 
     putDecimal = () => {
         if (this.data[this.data.length - 1] !== '.') {
             this.data += '.';
         }
         this.callListeners();
-    }
+    };
 
     getData = () => {
         return this.data;
-    }
+    };
 
     calculate = () => {
         console.log('calculate');
         // const display = document.querySelector('.display-container') as HTMLElement;
         // const displayedNumber = display?.textContent ?? '0';
         // const expressionParts = displayedNumber.split(' ');
-        // display.textContent = this.calculateNew(...expressionParts).toString(); 
-    }
+        // display.textContent = this.calculateNew(...expressionParts).toString();
+    };
 
     reset = () => {
         this.data = '';
         this.callListeners();
-    }
+    };
 
     invertSign = () => {
         const dataToArr = this.data.split(' ');
@@ -88,7 +88,7 @@ export default class Calculator {
         this.data = '';
         this.data = `${firstPart.join(' ')} ${invertedNumber}`;
         this.callListeners();
-    }
+    };
 
     // calculateNew = (...params: string[]) => {
     //     let result: number = 0;
@@ -110,7 +110,7 @@ export default class Calculator {
     //             const currentResult = this.calculate(num1, operator, num2);
     //             result += currentResult;
     //         }
-    //     } 
+    //     }
     //     return result;
     // }
 
@@ -136,4 +136,3 @@ export default class Calculator {
     //     return result;
     // }
 }
-

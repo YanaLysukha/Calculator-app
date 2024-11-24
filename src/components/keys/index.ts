@@ -25,11 +25,11 @@ export default class Keys extends BaseElement<HTMLElement> {
 
     reset = () => {
         this.calculator.reset();
-    }
+    };
 
     toggleSigns = () => {
         this.calculator.invertSign();
-    }
+    };
 
     addNumber = (num: number) => () => this.calculator.putNumber(num);
 
@@ -37,17 +37,17 @@ export default class Keys extends BaseElement<HTMLElement> {
 
     addDecimal = () => {
         this.calculator.putDecimal();
-    }
+    };
 
     calculateResult = () => {
         this.calculator.calculate();
-    }
+    };
 
-    keysConfig: ({
+    keysConfig: {
         label: string;
         handler: () => void;
         className?: undefined | string;
-    })[] = [
+    }[] = [
         { label: 'AC', handler: this.reset },
         { label: ' +/- ', handler: this.toggleSigns },
         { label: '%', handler: this.checkOperator('%') },
