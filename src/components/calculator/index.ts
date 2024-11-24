@@ -3,8 +3,11 @@ export default class Calculator {
 
     private listeners: ((str: string) => void)[];
 
+    private data: string;
+
     private constructor() {
         this.listeners = [];
+        this.data = '';
     }
 
     public static getInstance(): Calculator {
@@ -20,7 +23,8 @@ export default class Calculator {
     }
 
     putNumber = (num: number) => {
-        console.log(num);
+        this.data += num;
+
         // const display = document.querySelector('.display-container') as HTMLElement;
         // const displayedNumber = display?.textContent ?? '0';
         // display.textContent = this.currentSign;
@@ -72,7 +76,7 @@ export default class Calculator {
     }
 
     getData = () => {
-        return '1 + 2';
+        return this.data;
     }
 
     calculate = () => {
@@ -84,7 +88,7 @@ export default class Calculator {
     }
 
     reset = () => {
-        console.log('reset');
+        this.data = '';
     }
 
     invertSign = () => {
