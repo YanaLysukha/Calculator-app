@@ -18,6 +18,12 @@ describe('calculator module', () => {
         test('should work correctly with an empty initial state', () => {
             calculator.putNumber(8);
             expect(calculator.getData()).toBe('8');
+        });
+
+        test('should work correctly when entering 0', () => {
+            calculator.putNumber(0);
+            calculator.putNumber(3);
+            expect(calculator.getData()).toBe('3');
         })
     })
 })

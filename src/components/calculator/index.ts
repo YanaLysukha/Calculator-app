@@ -23,16 +23,15 @@ export default class Calculator {
     }
 
     putNumber = (num: number) => {
-        this.data += num;
+        if (this.checkFirstNumber()) {
+            this.data = num.toString();
+        } else {
+            this.data += num;
+        }
+    }
 
-        // const display = document.querySelector('.display-container') as HTMLElement;
-        // const displayedNumber = display?.textContent ?? '0';
-        // display.textContent = this.currentSign;
-        // if (displayedNumber && displayedNumber === '0') {
-        //     display.textContent = this.currentSign;
-        // } else {
-        //     display.textContent = displayedNumber + this.currentSign;
-        // }
+    checkFirstNumber = () => {
+       return this.data === '0'; 
     }
 
     putOperator = (operator: string) => {
