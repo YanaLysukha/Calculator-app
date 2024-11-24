@@ -4,28 +4,6 @@ import './style.scss';
 
 type KeysProps = Omit<ElementProps<HTMLElement>, 'tag'>;
 
-const keysConfig = [
-    { type: 'operator', label: 'AC', action: 'reset' },
-    { type: 'operator', label: ' +/- ', action: 'sign change' },
-    { type: 'operator', label: ' % ', action: 'percent' },
-    { type: 'operator', label: ' ÷ ', action: 'division' },
-    { type: 'number', label: '7', action: '7' },
-    { type: 'number', label: '8', action: '8' },
-    { type: 'number', label: '9', action: '9' },
-    { type: 'operator', label: ' * ', action: 'multiplication' },
-    { type: 'number', label: '4', action: '4' },
-    { type: 'number', label: '5', action: '5' },
-    { type: 'number', label: '6', action: '6' },
-    { type: 'operator', label: ' - ', action: 'subtraction' },
-    { type: 'number', label: '1', action: '1' },
-    { type: 'number', label: '2', action: '2' },
-    { type: 'number', label: '3', action: '3' },
-    { type: 'operator', label: ' + ', action: 'addition' },
-    { type: 'number', label: '0', action: '0' },
-    { type: 'operator', label: '.', action: 'decimal' },
-    { type: 'operator', label: '=', action: 'calculation' },
-];
-
 const operators = ['-', '+', '%', '÷', '*'];
 
 export default class Keys extends BaseElement<HTMLElement> {
@@ -44,49 +22,23 @@ export default class Keys extends BaseElement<HTMLElement> {
     }
 
     private createKeys = () => {
-        keysConfig.forEach((key) => {
+        this.keysConfig.forEach((key) => {
             this.button = new BaseElement<HTMLButtonElement>({ tag: 'button' });
             this.button.node.textContent = key.label;
             this.node.append(this.button.node);
-            if (key.type === 'operator' && key.action) {
-                this.button.node.classList.add('key-operator');
-                this.button.node.setAttribute('data-action', key.action);
+            if (key.className) {
+                this.button.node.classList.add(key.className);
             }
-            if (key.label === '0') {
-                this.button.node.classList.add('zero-number');
-            }
-            this.addOnclickHandlers(key, 'calculation', this.calculateResult);
-            this.addOnclickHandlers(key, 'decimal',  this.addDecimal);
-            this.addOnclickHandlers(key, 'subtraction',  this.checkSubtraction);
-            this.addOnclickHandlers(key, 'division', this.checkOperator);
-            this.addOnclickHandlers(key, 'multiplication', this.checkOperator);
-            this.addOnclickHandlers(key, 'addition', this.checkOperator);
-            this.addOnclickHandlers(key, 'percent', this.checkOperator);
-            this.addOnclickHandlers(key, '0', this.addNumber);
-            this.addOnclickHandlers(key, '1', this.addNumber);
-            this.addOnclickHandlers(key, '2', this.addNumber);
-            this.addOnclickHandlers(key, '3', this.addNumber);
-            this.addOnclickHandlers(key, '4', this.addNumber);
-            this.addOnclickHandlers(key, '5', this.addNumber);
-            this.addOnclickHandlers(key, '6', this.addNumber);
-            this.addOnclickHandlers(key, '7', this.addNumber);
-            this.addOnclickHandlers(key, '8', this.addNumber);
-            this.addOnclickHandlers(key, '9', this.addNumber);
+            this.button.node.addEventListener('click', key.handler);
         });
     };
 
-    addOnclickHandlers = (key: {
-        type: string;
-        label: string;
-        action: string;
-    } | {
-        type: string;
-        label: string;
-        action?: undefined;
-    }, action: string, handler: () => void) => {
-        if (key.action === action) {
-            this.button.node.addEventListener('click', handler);
-        }
+    reset = () => {
+        console.log('reset');
+    }
+
+    toggleSigns = () => {
+        console.log('toggle signs');
     }
 
     addNumber = () => {
@@ -191,4 +143,26 @@ export default class Keys extends BaseElement<HTMLElement> {
 
         return result;
     }
+
+    keysConfig = [
+        { label: 'AC', handler: this.reset, className: 'key-operator' },
+        { label: ' +/- ', handler: this.toggleSigns, className: 'key-operator' },
+        { label: ' % ', handler: this.checkOperator, className: 'key-operator' },
+        { label: ' ÷ ', handler: this.checkOperator, className: 'key-operator' },
+        { label: '7', handler: this.addNumber },
+        { label: '8', handler: this.addNumber },
+        { label: '9', handler: this.addNumber },
+        { label: ' * ', handler: this.checkOperator, className: 'key-operator' },
+        { label: '4', handler: this.addNumber },
+        { label: '5', handler: this.addNumber },
+        { label: '6', handler: this.addNumber },
+        { label: ' - ', handler: this.checkSubtraction, className: 'key-operator' },
+        { label: '1', handler: this.addNumber },
+        { label: '2', handler: this.addNumber },
+        { label: '3', handler: this.addNumber },
+        { label: ' + ', handler: this.checkOperator, className: 'key-operator' },
+        { label: '0', handler: this.addNumber, className: 'zero-number' },
+        { label: '.', handler: this.addDecimal, className: 'key-operator' },
+        { label: '=', handler: this.calculateResult, className: 'key-operator' },
+    ];
 }
