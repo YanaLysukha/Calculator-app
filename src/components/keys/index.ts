@@ -40,7 +40,6 @@ export default class Keys extends BaseElement<HTMLElement> {
     constructor(props: KeysProps) {
         super({ tag: 'div', class: 'keys-container', ...props });
         this.createKeys();
-        this.onClickHandler();
         this.calculator = Calculator.getInstance();
     }
 
@@ -90,40 +89,6 @@ export default class Keys extends BaseElement<HTMLElement> {
         }
     }
 
-    private onClickHandler = () => {
-        this.node.addEventListener('click', (e) => {
-            // this.calculator.putNumber(2);
-
-            const target = e.target as HTMLElement;
-
-            if (target.tagName === 'BUTTON') {
-                const action = target.dataset.action;
-                this.currentSign = target.textContent ?? '';
-
-                if (!action) {
-                    return;
-                } else if (
-                    action === 'division' ||
-                    action === 'multiplication' ||
-                    action === 'addition' ||
-                    action === 'percent'
-                ) {
-                    return;
-                }
-                if (action === 'decimal') {
-                    return;
-                }
-                if (action === 'subtraction') {
-                    return;
-                }
-                this.previousSign = this.currentSign;
-                if (action === 'calculation') {
-                    return;
-                }
-            }
-        });
-    };
-
     addNumber = () => {
         const display = document.querySelector('.display-container') as HTMLElement;
         const displayedNumber = display?.textContent ?? '0';
@@ -138,6 +103,7 @@ export default class Keys extends BaseElement<HTMLElement> {
     checkOperator = () => {
         const display = document.querySelector('.display-container') as HTMLElement;
         const displayedNumber = display?.textContent ?? '0';
+    
         if (display.textContent !== '') {
             if (operators.includes(this.previousSign) && operators.includes(this.currentSign)) {
                 // replace operators
@@ -150,6 +116,7 @@ export default class Keys extends BaseElement<HTMLElement> {
         } else {
             display.textContent = '';
         }
+        this.previousSign = this.currentSign;
     }
 
     checkSubtraction = () => {
@@ -163,6 +130,7 @@ export default class Keys extends BaseElement<HTMLElement> {
         } else {
             display.textContent = displayedNumber + this.currentSign;
         }
+        this.previousSign = this.currentSign;
     }
 
     addDecimal = () => {
