@@ -24,11 +24,11 @@ export default class Keys extends BaseElement<HTMLElement> {
     };
 
     reset = () => {
-        console.log('reset');
+        this.calculator.reset();
     }
 
     toggleSigns = () => {
-        console.log('toggle signs');
+        this.calculator.invertSign();
     }
 
     addNumber = () => {

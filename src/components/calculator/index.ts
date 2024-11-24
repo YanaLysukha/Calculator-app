@@ -1,8 +1,10 @@
 export default class Calculator {
     static #instance: Calculator;
 
+    private listeners: ((str: string) => void)[];
+
     private constructor() {
-        
+        this.listeners = [];
     }
 
     public static getInstance(): Calculator {
@@ -11,6 +13,10 @@ export default class Calculator {
         }
 
         return Calculator.#instance;
+    }
+
+    addListener = (method: (str: string) => void) => {
+        this.listeners.push(method);
     }
 
     putNumber = (num: number) => {
@@ -75,6 +81,14 @@ export default class Calculator {
         // const displayedNumber = display?.textContent ?? '0';
         // const expressionParts = displayedNumber.split(' ');
         // display.textContent = this.calculateNew(...expressionParts).toString(); 
+    }
+
+    reset = () => {
+        console.log('reset');
+    }
+
+    invertSign = () => {
+        console.log('invert');
     }
 
     // calculateNew = (...params: string[]) => {
