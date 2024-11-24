@@ -13,8 +13,6 @@
         "sourceMap": true,
         "paths": {
             "@Src/*": ["./src/*"],
-            "@Assets/*": ["./src/assets/*"],
-            "@Img/*": ["./src/assets/img/*"]
         }
     },
     "ts-node": {
