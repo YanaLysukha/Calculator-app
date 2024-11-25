@@ -55,7 +55,7 @@ export default class Keys extends BaseElement<HTMLElement> {
         { label: '7', handler: this.addNumber(7), className: 'gray' },
         { label: '8', handler: this.addNumber(8), className: 'gray' },
         { label: '9', handler: this.addNumber(9), className: 'gray' },
-        { label: '*', handler: this.checkOperator('*'), className: 'orange' },
+        { label: '×', handler: this.checkOperator('*'), className: 'orange' },
         { label: '4', handler: this.addNumber(4), className: 'gray' },
         { label: '5', handler: this.addNumber(5), className: 'gray' },
         { label: '6', handler: this.addNumber(6), className: 'gray' },
