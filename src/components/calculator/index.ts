@@ -1,5 +1,4 @@
 export type Operators = '+' | '-' | '*' | '%' | '/';
-// const operatorsArr = ['+', '-', '*', '%', '/'];
 
 export default class Calculator {
     static #instance: Calculator;
@@ -103,19 +102,22 @@ export default class Calculator {
         this.callListeners();
     };
 
-    calculateResult = () => {
-        console.log('calculate');
-        // let result = 0;
-
-        // const calculate = (array: number[]): void => {
-        //     result = this.doOperations(array[0], this.operatorsArray[0], array[1]);
-        //     const restArray = array.slice(2);
-        //     return calculate([result, ...restArray]);
-        // }
-        
-        // calculate(this.numbersArray);
-        // this.reset();
-        // this.data = `${result}`;
+    calculate = () => {
+        if (this.currentNumber) {
+            this.numbersArray.push(this.currentNumber);
+        }
+        let result = 0;
+        const resultsArr = [];
+        for (let i = 0; i < this.numbersArray.length - 1; i += 1) {
+            if (i === 0) {
+                result = this.doOperations(this.numbersArray[i], this.operatorsArray[i], this.numbersArray[i + 1]);
+            } else {
+                result = this.doOperations(resultsArr[resultsArr.length - 1], this.operatorsArray[i], this.numbersArray[i + 1]);
+            }
+            resultsArr.push(result);
+        }
+        this.reset();
+        this.data = `${result}`;
     };
 
     doOperations = (num1: number, operator: string, num2: number) => {

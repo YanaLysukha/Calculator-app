@@ -82,5 +82,17 @@ describe('calculator module', () => {
             calculator.invertSign();
             expect(calculator.getData()).toBe('23-3');
         })
+    });
+
+    describe('check calculate method', () => {
+        test('should calculate result correctly', () => {
+            calculator.putNumber(5);
+            calculator.putOperator('+');
+            calculator.putNumber(2);
+            calculator.putOperator('-');
+            calculator.putNumber(3);
+            calculator.calculate();
+            expect(calculator.getData()).toBe('4');
+        })
     })
 });
