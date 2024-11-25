@@ -69,7 +69,18 @@ describe('calculator module', () => {
         test('should invert sign correctly', () => {
             calculator.putNumber(23);
             calculator.invertSign();
-            expect(calculator.getData()).toBe('-23');
+            calculator.putOperator('*');
+            calculator.putNumber(5);
+            calculator.invertSign();
+            expect(calculator.getData()).toBe('-23*-5');
+        })
+
+        test('should invert sign correctly', () => {
+            calculator.putNumber(23);
+            calculator.putOperator('-');
+            calculator.putNumber(-3);
+            calculator.invertSign();
+            expect(calculator.getData()).toBe('23-3');
         })
     })
 });
