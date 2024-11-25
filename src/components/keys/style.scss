@@ -6,4 +6,33 @@
 
 button.zero-number {
     grid-column: span 2;
+    background-color: #787575;
+}
+
+button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    font-size: 1.5em;
+    color: white;
+    padding: 1rem;
+
+    &:hover {
+        opacity: 0.8;
+    }
+}
+
+button.orange {
+    background-color: #e49a38;
+}
+
+button.dark-gray {
+    background-color: #5c5959;
+}
+
+button.gray {
+    background-color: #787575;
 }
