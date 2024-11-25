@@ -105,5 +105,21 @@ describe('calculator module', () => {
             calculator.calculate();
             expect(calculator.getData()).toBe('7');
         });
+
+        test('should calculate result correctly considering operator precedence', () => {
+            calculator.putNumber(3);
+            calculator.putOperator('+');
+            calculator.putNumber(5);
+            calculator.putOperator('*');
+            calculator.putNumber(2);
+            calculator.calculate();
+            expect(calculator.getData()).toBe('13');
+            calculator.putOperator('-');
+            calculator.putNumber(2);
+            calculator.putOperator('/');
+            calculator.putNumber(2);
+            calculator.calculate();
+            expect(calculator.getData()).toBe('12');
+        })
     })
 });

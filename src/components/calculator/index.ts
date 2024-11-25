@@ -107,16 +107,24 @@ export default class Calculator {
         if (this.currentNumber) {
             this.numbersArray.push(this.currentNumber);
         }
-        let result = 0;
-        const resultsArr = [];
-        for (let i = 0; i < this.numbersArray.length - 1; i += 1) {
-            if (i === 0) {
-                result = this.doOperations(this.numbersArray[i], this.operatorsArray[i], this.numbersArray[i + 1]);
+        const numbers = [...this.numbersArray];
+        const operators = [...this.operatorsArray];
+
+        for (let i = 0; i < operators.length; ) {
+            if (operators[i] === "*" || operators[i] === "/") {
+                const result = this.doOperations(numbers[i], operators[i], numbers[i + 1]);
+                numbers.splice(i, 2, result);
+                operators.splice(i, 1);
             } else {
-                result = this.doOperations(resultsArr[resultsArr.length - 1], this.operatorsArray[i], this.numbersArray[i + 1]);
+                i+=1;
             }
-            resultsArr.push(result);
         }
+
+        let result = numbers[0];
+        for (let i = 0; i < operators.length; i+=1) {
+            result = this.doOperations(result, operators[i], numbers[i + 1]);
+        }
+
         this.reset();
         this.numbersArray.push(result);
 
@@ -136,7 +144,7 @@ export default class Calculator {
             case '*':
                 result = num1 * num2;
                 break;
-            case '÷':
+            case '/':
                 result = num1 / num2;
             default:
                 console.log(`${result} - Such an operator does not exist!`);
