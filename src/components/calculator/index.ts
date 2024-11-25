@@ -5,8 +5,6 @@ export default class Calculator {
 
     private listeners: ((str: string) => void)[];
 
-    private data: string;
-
     private operatorsArray: Operators[];
 
     private numbersArray: number[];
@@ -17,7 +15,6 @@ export default class Calculator {
 
     private constructor() {
         this.listeners = [];
-        this.data = '';
         this.operatorsArray = [];
         this.numbersArray = [];
         this.currentNumber = null;
@@ -33,7 +30,11 @@ export default class Calculator {
     }
 
     private callListeners = () => {
-        this.listeners.forEach((listener) => listener(this.getData()));
+        this.listeners.forEach((listener) => {
+            const data = this.getData();
+            console.log(data, 'from callListener');
+            listener(data);
+        });
     };
 
     addListener = (method: (str: string) => void) => {
@@ -71,19 +72,20 @@ export default class Calculator {
     };
 
     getData = () => {
+        let data: string = '';
         this.numbersArray.forEach((num, i) => {
-            this.data += `${num}`;
+            data += `${num}`;
             if (this.operatorsArray[i]) {
-                this.data += `${this.operatorsArray[i]}`;
+                data += `${this.operatorsArray[i]}`;
             }
         })
         if (this.currentOperator) {
-            this.data += `${this.currentOperator}`;
+            data += `${this.currentOperator}`;
         }
         if (this.currentNumber) {
-            this.data += `${this.currentNumber}`;
+            data += `${this.currentNumber}`;
         }
-        return this.data;
+        return data;
     };
 
     reset = () => {
@@ -91,7 +93,6 @@ export default class Calculator {
         this.operatorsArray = [];
         this.currentNumber = null;
         this.currentOperator = null;
-        this.data = '';
         this.callListeners();
     };
 
@@ -117,7 +118,9 @@ export default class Calculator {
             resultsArr.push(result);
         }
         this.reset();
-        this.data = `${result}`;
+        this.numbersArray.push(result);
+
+        this.callListeners();
     };
 
     doOperations = (num1: number, operator: string, num2: number) => {

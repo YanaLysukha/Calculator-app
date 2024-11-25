@@ -13,5 +13,6 @@ export default class Display extends BaseElement<HTMLElement> {
 
     private updateText = (str: string) => {
         this.node.textContent = str;
+        console.log(str, 'from display');
     };
 }

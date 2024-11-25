@@ -93,6 +93,17 @@ describe('calculator module', () => {
             calculator.putNumber(3);
             calculator.calculate();
             expect(calculator.getData()).toBe('4');
-        })
+        });
+
+        test('should calculate result correctly', () => {
+            calculator.putNumber(5);
+            expect(calculator.getData()).toBe('5');
+            calculator.putOperator('+');
+            expect(calculator.getData()).toBe('5+');
+            calculator.putNumber(2);
+            expect(calculator.getData()).toBe('5+2');
+            calculator.calculate();
+            expect(calculator.getData()).toBe('7');
+        });
     })
 });
