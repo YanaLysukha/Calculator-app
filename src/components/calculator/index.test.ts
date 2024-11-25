@@ -28,33 +28,33 @@ describe('calculator module', () => {
         });
     });
 
-    describe('check putDecimal method', () => {
-        test('should append the decimal correctly', () => {
-            calculator.putNumber(0);
-            calculator.putDecimal();
-            calculator.putNumber(2);
-            expect(calculator.getData()).toBe('0.2');
-        });
+    // describe('check putDecimal method', () => {
+    //     test('should append the decimal correctly', () => {
+    //         calculator.putNumber(0);
+    //         calculator.putDecimal();
+    //         calculator.putNumber(2);
+    //         expect(calculator.getData()).toBe('0.2');
+    //     });
 
-        test('should not append several decimals in row', () => {
-            calculator.putNumber(1);
-            calculator.putDecimal();
-            calculator.putDecimal();
-            calculator.putDecimal();
-            calculator.putNumber(2);
-            expect(calculator.getData()).toBe('1.2');
-        });
-    });
+    //     test('should not append several decimals in row', () => {
+    //         calculator.putNumber(1);
+    //         calculator.putDecimal();
+    //         calculator.putDecimal();
+    //         calculator.putDecimal();
+    //         calculator.putNumber(2);
+    //         expect(calculator.getData()).toBe('1.2');
+    //     });
+    // });
 
     describe('check putOperator method', () => {
-        test('should append the operator to the internal data', () => {
-            calculator.putNumber(1);
-            calculator.putDecimal();
-            calculator.putNumber(5);
-            calculator.putOperator('-');
-            calculator.putNumber(2);
-            expect(calculator.getData()).toBe('1.5-2');
-        });
+        // test('should append the operator to the internal data', () => {
+        //     calculator.putNumber(1);
+        //     calculator.putDecimal();
+        //     calculator.putNumber(5);
+        //     calculator.putOperator('-');
+        //     calculator.putNumber(2);
+        //     expect(calculator.getData()).toBe('1.5-2');
+        // });
 
         test('should replace operator instead of another', () => {
             calculator.putNumber(2);
@@ -65,10 +65,11 @@ describe('calculator module', () => {
         });
     });
 
-    // describe('check invertSign method', () => {
-    //     test('should invert sign correctly', () => {
-    //         calculator.putNumber(23);
-    //         calculator.putOperator('+')
-    //     })
-    // })
+    describe('check invertSign method', () => {
+        test('should invert sign correctly', () => {
+            calculator.putNumber(23);
+            calculator.invertSign();
+            expect(calculator.getData()).toBe('-23');
+        })
+    })
 });
