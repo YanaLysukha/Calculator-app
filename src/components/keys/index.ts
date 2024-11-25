@@ -40,7 +40,7 @@ export default class Keys extends BaseElement<HTMLElement> {
     };
 
     calculateResult = () => {
-        this.calculator.calculate();
+        this.calculator.calculateResult();
     };
 
     keysConfig: {

@@ -1,5 +1,5 @@
 export type Operators = '+' | '-' | '*' | '%' | '/';
-const operatorsArr = ['+', '-', '*', '%', '/'];
+// const operatorsArr = ['+', '-', '*', '%', '/'];
 
 export default class Calculator {
     static #instance: Calculator;
@@ -8,9 +8,21 @@ export default class Calculator {
 
     private data: string;
 
+    private operatorsArray: Operators[];
+
+    private numbersArray: number[];
+
+    private currentNumber: number | null;
+
+    private currentOperator: Operators | null;
+
     private constructor() {
         this.listeners = [];
         this.data = '';
+        this.operatorsArray = [];
+        this.numbersArray = [];
+        this.currentNumber = null;
+        this.currentOperator = null;
     }
 
     public static getInstance(): Calculator {
@@ -30,109 +42,101 @@ export default class Calculator {
     };
 
     putNumber = (num: number) => {
-        console.log(num);
-        if (this.checkFirstNumber()) {
-            this.data = num.toString();
-        } else {
-            this.data += num;
+        if (this.currentOperator) {
+            this.operatorsArray.push(this.currentOperator);
+            this.currentOperator = null;
         }
+        if (this.currentNumber === null) {
+            this.currentNumber = num;
+        } else {
+            this.currentNumber = this.currentNumber * 10 + num;
+        }
+
         this.callListeners();
     };
 
-    private checkFirstNumber = () => {
-        return this.data === '0';
-    };
-
     putOperator = (operator: Operators) => {
-        const lastCharIndex = this.data.length - 1;
-        const firstPartOfData = this.data.slice(0, lastCharIndex);
-        if (operatorsArr.includes(this.data[lastCharIndex])) {
-            this.data = '';
-            this.data = firstPartOfData + ' ' + operator + ' ';
-        } else {
-            this.data += operator;
+        if (this.currentNumber) {
+            this.numbersArray.push(this.currentNumber);
+            this.currentNumber = null;
         }
+        this.currentOperator = operator;
         this.callListeners();
     };
 
     putDecimal = () => {
-        if (this.data[this.data.length - 1] !== '.') {
-            this.data += '.';
-        }
+        // if (this.data[this.data.length - 1] !== '.') {
+        //     this.data += '.';
+        // }
         this.callListeners();
     };
 
     getData = () => {
+        this.numbersArray.forEach((num, i) => {
+            this.data += `${num}`;
+            if (this.operatorsArray[i]) {
+                this.data += `${this.operatorsArray[i]}`;
+            }
+        })
+        if (this.currentOperator) {
+            this.data += `${this.currentOperator}`;
+        }
+        if (this.currentNumber) {
+            this.data += `${this.currentNumber}`;
+        }
         return this.data;
     };
 
-    calculate = () => {
-        console.log('calculate');
-        // const display = document.querySelector('.display-container') as HTMLElement;
-        // const displayedNumber = display?.textContent ?? '0';
-        // const expressionParts = displayedNumber.split(' ');
-        // display.textContent = this.calculateNew(...expressionParts).toString();
-    };
-
     reset = () => {
+        this.numbersArray = [];
+        this.operatorsArray = [];
+        this.currentNumber = null;
+        this.currentOperator = null;
         this.data = '';
         this.callListeners();
     };
 
     invertSign = () => {
-        const dataToArr = this.data.split(' ');
-        const lastIndex = dataToArr.length - 1;
-        const firstPart = dataToArr.slice(0, lastIndex);
-        const lastNumber = dataToArr[lastIndex];
-        const invertedNumber = Number(lastNumber) < 0 ? -Number(lastNumber) : Number(lastNumber);
-        this.data = '';
-        this.data = `${firstPart.join(' ')} ${invertedNumber}`;
+        if (this.currentNumber) {
+            this.currentNumber = this.currentNumber * -1;
+        }
         this.callListeners();
     };
 
-    // calculateNew = (...params: string[]) => {
-    //     let result: number = 0;
-    //     let num1: string = '';
-    //     let num2: string;
-    //     let operator: string = '';
-    //     for (let i = 0; i < params.length; i += 2) {
-    //         if(!isNaN(Number(params[i]))) {
-    //             num1 = params[i];
-    //             console.log('num1', num1);
-    //         }
-    //         if (isNaN(Number(params[i + 1]))) {
-    //             operator = params[i + 1];
-    //             console.log('operator', params[i + 1]);
-    //         }
-    //         if (!isNaN(Number(params[i + 2]))) {
-    //             num2 = params[i + 2];
-    //             console.log('num2', num2);
-    //             const currentResult = this.calculate(num1, operator, num2);
-    //             result += currentResult;
-    //         }
-    //     }
-    //     return result;
-    // }
+    calculateResult = () => {
+        console.log('calculate');
+        // let result = 0;
 
-    // calculate = (num1: string, operator: string, num2: string) => {
-    //     let result = 0;
+        // const calculate = (array: number[]): void => {
+        //     result = this.doOperations(array[0], this.operatorsArray[0], array[1]);
+        //     const restArray = array.slice(2);
+        //     return calculate([result, ...restArray]);
+        // }
+        
+        // calculate(this.numbersArray);
+        // this.reset();
+        // this.data = `${result}`;
+    };
 
-    //     switch (operator) {
-    //         case '-':
-    //             result = parseFloat(num1) - parseFloat(num2);
-    //             break;
-    //         case '+':
-    //             result = parseFloat(num1) + parseFloat(num2);
-    //             break;
-    //         case '*':
-    //             result = parseFloat(num1) * parseFloat(num2);
-    //             break;
-    //         case '÷':
-    //             result = parseFloat(num1) / parseFloat(num2);
-    //         default:
-    //             console.log(`${result} - Such an operator does not exist!`);
-    //     }
+    doOperations = (num1: number, operator: string, num2: number) => {
+        let result = 0;
 
-    //     return result;
-    // }
+        switch (operator) {
+            case '-':
+                result = num1 - num2;
+                break;
+            case '+':
+                result = num1 + num2;
+                break;
+            case '*':
+                result = num1 * num2;
+                break;
+            case '÷':
+                result = num1 / num2;
+            default:
+                console.log(`${result} - Such an operator does not exist!`);
+        }
+
+        return result;
+    }
 }

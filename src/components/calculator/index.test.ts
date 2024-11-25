@@ -11,8 +11,9 @@ describe('calculator module', () => {
     describe('check putNumber method', () => {
         test('should append the number to the internal data', () => {
             calculator.putNumber(3);
+            calculator.putOperator('+')
             calculator.putNumber(2);
-            expect(calculator.getData()).toBe('32');
+            expect(calculator.getData()).toBe('3+2');
         });
 
         test('should work correctly with an empty initial state', () => {
