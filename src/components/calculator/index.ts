@@ -59,7 +59,9 @@ export default class Calculator {
             this.numbersArray.push(this.currentNumber);
             this.currentNumber = null;
         }
-        this.currentOperator = operator;
+        if (this.numbersArray.length !== 0) {
+            this.currentOperator = operator;
+        }
 
         this.callListeners();
     };
