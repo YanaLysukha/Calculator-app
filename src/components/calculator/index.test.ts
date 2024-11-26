@@ -23,6 +23,7 @@ describe('calculator module', () => {
 
         test('should work correctly when entering 0', () => {
             calculator.putNumber(0);
+            expect(calculator.getData()).toBe('0');
             calculator.putNumber(3);
             expect(calculator.getData()).toBe('3');
         });
@@ -63,6 +64,17 @@ describe('calculator module', () => {
             calculator.putNumber(5);
             expect(calculator.getData()).toBe('2+5');
         });
+
+        test('should not display operator that is entered after 0 ', () => {
+            calculator.putNumber(0);
+            calculator.putOperator('+');
+            expect(calculator.getData()).toBe('0+');
+        })
+
+        test('should not display operator that is entered first ', () => {
+            calculator.putOperator('*');
+            expect(calculator.getData()).toBe('');
+        })
     });
 
     describe('check invertSign method', () => {
@@ -132,6 +144,17 @@ describe('calculator module', () => {
             calculator.putNumber(8);
             calculator.calculate();
             expect(calculator.getData()).toBe('0.04');
+            calculator.reset();
+            calculator.putNumber(100);
+            calculator.putOperator('%');
+            calculator.putNumber(0);
+            calculator.calculate();
+            expect(calculator.getData()).toBe('0');
+        })
+
+        test('should not show something when there is no data', () => {
+            calculator.calculate();
+            expect(calculator.getData()).toBe('');
         })
     });
 });

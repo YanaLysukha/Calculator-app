@@ -32,7 +32,6 @@ export default class Calculator {
     private callListeners = () => {
         this.listeners.forEach((listener) => {
             const data = this.getData();
-            console.log(data, 'from callListener');
             listener(data);
         });
     };
@@ -51,16 +50,17 @@ export default class Calculator {
         } else {
             this.currentNumber = this.currentNumber * 10 + num;
         }
-
         this.callListeners();
     };
 
     putOperator = (operator: Operators) => {
-        if (this.currentNumber) {
+        // console.log(this.currentNumber)
+        if (this.currentNumber !== null) {
             this.numbersArray.push(this.currentNumber);
             this.currentNumber = null;
         }
         this.currentOperator = operator;
+
         this.callListeners();
     };
 
@@ -82,7 +82,7 @@ export default class Calculator {
         if (this.currentOperator) {
             data += `${this.currentOperator}`;
         }
-        if (this.currentNumber) {
+        if (this.currentNumber || this.currentNumber === 0) {
             data += `${this.currentNumber}`;
         }
         return data;
@@ -104,7 +104,10 @@ export default class Calculator {
     };
 
     calculate = () => {
-        if (this.currentNumber) {
+        if (this.numbersArray.length === 0 || this.operatorsArray.length === 0) {
+            return;
+        }
+        if (this.currentNumber !== null) {
             this.numbersArray.push(this.currentNumber);
         }
         const numbers = [...this.numbersArray];
@@ -148,11 +151,17 @@ export default class Calculator {
                 if (num2 !== 0) {
                     result = num1 / num2;
                 } else {
-                    console.error('Division by zero is not allowed!')
+                    console.error('Division by zero is not allowed!');
+                    result = 0;
                 }
                 break;
             case '%':
-                result = num1 * (num2 / 100);
+                if (num2 === 0) {
+                    console.error("Cannot calculate percentage with divisor 0!");
+                    result = 0;
+                } else {
+                    result = num1 * (num2 / 100);
+                }
                 break;
             default:
                 console.log(`${operator} - Such an operator does not exist!`);
