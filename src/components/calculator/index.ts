@@ -111,7 +111,7 @@ export default class Calculator {
         const operators = [...this.operatorsArray];
 
         for (let i = 0; i < operators.length; ) {
-            if (operators[i] === "*" || operators[i] === "/") {
+            if (operators[i] === "*" || operators[i] === "/" || operators[i] === "%") {
                 const result = this.doOperations(numbers[i], operators[i], numbers[i + 1]);
                 numbers.splice(i, 2, result);
                 operators.splice(i, 1);
@@ -145,9 +145,17 @@ export default class Calculator {
                 result = num1 * num2;
                 break;
             case '/':
-                result = num1 / num2;
+                if (num2 !== 0) {
+                    result = num1 / num2;
+                } else {
+                    console.error('Division by zero is not allowed!')
+                }
+                break;
+            case '%':
+                result = num1 * (num2 / 100);
+                break;
             default:
-                console.log(`${result} - Such an operator does not exist!`);
+                console.log(`${operator} - Such an operator does not exist!`);
         }
 
         return result;

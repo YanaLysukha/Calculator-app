@@ -120,6 +120,18 @@ describe('calculator module', () => {
             calculator.putNumber(2);
             calculator.calculate();
             expect(calculator.getData()).toBe('12');
+        });
+
+        test('should calculate percent correctly', () => {
+            calculator.putNumber(5);
+            calculator.putOperator('%');
+            calculator.putNumber(10);
+            calculator.calculate();
+            expect(calculator.getData()).toBe('0.5');
+            calculator.putOperator('%');
+            calculator.putNumber(8);
+            calculator.calculate();
+            expect(calculator.getData()).toBe('0.04');
         })
-    })
+    });
 });
