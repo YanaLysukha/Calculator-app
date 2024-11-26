@@ -3,7 +3,7 @@ export type Operators = '+' | '-' | '*' | '%' | '/';
 export default class Calculator {
     static #instance: Calculator;
 
-    private listeners: ((str: string) => void)[];
+    private subscribers: ((str: string) => void)[];
 
     private operatorsArray: Operators[];
 
@@ -14,7 +14,7 @@ export default class Calculator {
     private currentOperator: Operators | null;
 
     private constructor() {
-        this.listeners = [];
+        this.subscribers = [];
         this.operatorsArray = [];
         this.numbersArray = [];
         this.currentNumber = null;
@@ -29,15 +29,15 @@ export default class Calculator {
         return Calculator.#instance;
     }
 
-    private callListeners = () => {
-        this.listeners.forEach((listener) => {
+    private notifySubscribers = () => {
+        this.subscribers.forEach((subscriber) => {
             const data = this.getData();
-            listener(data);
+            subscriber(data);
         });
     };
 
-    addListener = (method: (str: string) => void) => {
-        this.listeners.push(method);
+    subscribe = (method: (str: string) => void) => {
+        this.subscribers.push(method);
     };
 
     putNumber = (num: number) => {
@@ -50,7 +50,7 @@ export default class Calculator {
         } else {
             this.currentNumber = this.currentNumber * 10 + num;
         }
-        this.callListeners();
+        this.notifySubscribers();
     };
 
     putOperator = (operator: Operators) => {
@@ -63,14 +63,14 @@ export default class Calculator {
             this.currentOperator = operator;
         }
 
-        this.callListeners();
+        this.notifySubscribers();
     };
 
     putDecimal = () => {
         // if (this.data[this.data.length - 1] !== '.') {
         //     this.data += '.';
         // }
-        this.callListeners();
+        this.notifySubscribers();
     };
 
     getData = () => {
@@ -95,14 +95,14 @@ export default class Calculator {
         this.operatorsArray = [];
         this.currentNumber = null;
         this.currentOperator = null;
-        this.callListeners();
+        this.notifySubscribers();
     };
 
     invertSign = () => {
         if (this.currentNumber) {
             this.currentNumber = this.currentNumber * -1;
         }
-        this.callListeners();
+        this.notifySubscribers();
     };
 
     calculate = () => {
@@ -133,7 +133,7 @@ export default class Calculator {
         this.reset();
         this.numbersArray.push(result);
 
-        this.callListeners();
+        this.notifySubscribers();
     };
 
     doOperations = (num1: number, operator: string, num2: number) => {

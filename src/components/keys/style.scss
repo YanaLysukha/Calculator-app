@@ -1,3 +1,19 @@
+.dark {
+    --button-background-accent: #e49a38;
+    --button-background-neutral: #787575;
+    --button-background-dark: #5c5959;
+    --button-color-text: #ffffff;
+    --button-border: rgba(255, 255, 255, 0.1);
+}
+
+.light {
+    --button-background-accent: #efa657;
+    --button-background-neutral: #f4ce9a;
+    --button-background-dark: #f1bd76;
+    --button-color-text: #4e4d4d;
+    --button-border: rgba(255, 255, 255, 0.26);
+}
+
 .keys-container {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -6,7 +22,7 @@
 
 button.zero-number {
     grid-column: span 2;
-    background-color: #787575;
+    background-color: var(--button-background-neutral);
 }
 
 button {
@@ -15,12 +31,10 @@ button {
     align-items: center;
     cursor: pointer;
     outline: none;
-    border: none;
     font-size: 1.5em;
-    color: white;
+    color: var(--button-color-text);
     padding: 1rem;
-
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--button-border);
 
     &:hover {
         opacity: 0.8;
@@ -32,13 +46,13 @@ button {
 }
 
 button.orange {
-    background-color: #e49a38;
+    background-color: var(--button-background-accent);
 }
 
 button.dark-gray {
-    background-color: #5c5959;
+    background-color: var(--button-background-dark);
 }
 
 button.gray {
-    background-color: #787575;
+    background-color: var(--button-background-neutral);
 }

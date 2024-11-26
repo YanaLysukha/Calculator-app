@@ -1,6 +1,7 @@
 import BaseElement from '../base-component';
 import Calculator, { Operators } from '../calculator';
 import './style.scss';
+import ThemeManager from '../ThemeManager';
 
 export default class Keys extends BaseElement<HTMLElement> {
     private calculator: Calculator;
@@ -9,6 +10,8 @@ export default class Keys extends BaseElement<HTMLElement> {
         super({ tag: 'div', class: 'keys-container' });
         this.createKeys();
         this.calculator = Calculator.getInstance();
+        ThemeManager.getInstance().subscribe(this.updateTheme);
+        this.node.classList.add('light');
     }
 
     private createKeys = () => {
@@ -42,6 +45,11 @@ export default class Keys extends BaseElement<HTMLElement> {
     calculateResult = () => {
         this.calculator.calculate();
     };
+
+    updateTheme = ()=> {
+        this.node.classList.toggle('light');
+        this.node.classList.toggle('dark');
+    }
 
     keysConfig: {
         label: string;

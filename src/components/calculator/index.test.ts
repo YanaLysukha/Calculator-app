@@ -93,6 +93,10 @@ describe('calculator module', () => {
             calculator.putNumber(-3);
             calculator.invertSign();
             expect(calculator.getData()).toBe('23-3');
+            calculator.calculate();
+            expect(calculator.getData()).toBe('20');
+            calculator.invertSign();
+            expect(calculator.getData()).toBe('-20');
         })
     });
 
