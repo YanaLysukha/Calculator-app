@@ -1,0 +1,60 @@
+.theme-manager-wrapper {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 54px;
+  height: 28px;
+  margin-right: 0.7rem;
+}
+
+.switch input {
+  width: 0;
+  height: 0;
+  opacity: 0;
+}
+
+.switch input:checked + .slider {
+  background-color: transparent;
+  border: 2px solid rgb(241, 234, 226);
+}
+
+.switch input:checked + .slider::before {
+  transform: translateX(24px);
+  border-radius: 50%;
+  background-color: rgb(241, 234, 226);
+  box-shadow: none;
+}
+
+.switch .slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: transparent;
+  border: 2px solid rgb(233, 202, 164);
+  transition: 0.4s;
+  border-radius: 20px;
+  box-shadow: inset 0px 0px 15px rgb(156, 125, 105);
+}
+
+.switch .slider:before {
+  position: absolute;
+  content: '';
+  height: 18px;
+  width: 18px;
+  left: 4px;
+  bottom: 4px;
+  transition: 0.4s;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 16px;
+  box-shadow: inset -5px -3px 0 #b58a51;
+  background-color: transparent;
+}
