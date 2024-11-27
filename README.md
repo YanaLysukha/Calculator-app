@@ -27,3 +27,7 @@
 5. Start the development server:
    ```bash
    npm start
+
+### Known issues
+There is a list of known issues that can be fixed in the future:
+- the app doesn't work with BigInt
