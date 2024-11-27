@@ -2,7 +2,7 @@ import BaseElement from './components/base-component';
 import Display from './components/display';
 import Keys from './components/keys';
 import './style.scss';
-import ThemeManager from './components/ThemeManager';
+import ThemeManager from './components/theme-manager';
 
 const updateTheme = () => {
     document.body.classList.toggle('light');

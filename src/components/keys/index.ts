@@ -1,7 +1,7 @@
 import BaseElement from '../base-component';
 import Calculator, { Operators } from '../calculator';
 import './style.scss';
-import ThemeManager from '../ThemeManager';
+import ThemeManager from '../theme-manager';
 
 export default class Keys extends BaseElement<HTMLElement> {
     private calculator: Calculator;

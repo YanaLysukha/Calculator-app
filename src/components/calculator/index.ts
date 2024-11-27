@@ -72,7 +72,6 @@ export default class Calculator {
             this.isDecimalPointUsed = false;
             this.decimalPart = 1;
         }
-        // console.log(this.currentNumber)
         if (this.currentNumber !== null) {
             this.numbersArray.push(this.currentNumber);
             this.currentNumber = null;
