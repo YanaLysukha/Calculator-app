@@ -160,5 +160,13 @@ describe('calculator module', () => {
             calculator.calculate();
             expect(calculator.getData()).toBe('');
         })
+
+        test('should divide correctly', () => {
+            calculator.putNumber(5);
+            calculator.putOperator('/');
+            calculator.putNumber(2);
+            calculator.calculate();
+            expect(calculator.getData()).toBe('2.5');
+        })
     });
 });

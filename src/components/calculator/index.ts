@@ -102,6 +102,9 @@ export default class Calculator {
         if (this.currentNumber) {
             this.currentNumber = this.currentNumber * -1;
         }
+        if (this.numbersArray.length === 1 && this.currentNumber === null) {
+            this.numbersArray[0] = this.numbersArray[0] * -1;
+        }
         this.notifySubscribers();
     };
 
