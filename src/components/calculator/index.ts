@@ -15,6 +15,10 @@ export default class Calculator {
 
     private showError: boolean = false;
 
+    private decimalPart = 1;
+
+    private isDecimalPointUsed = false;
+
     private constructor() {
         this.subscribers = [];
         this.operatorsArray = [];
@@ -53,12 +57,22 @@ export default class Calculator {
         if (this.currentNumber === null) {
             this.currentNumber = num;
         } else {
-            this.currentNumber = this.currentNumber * 10 + num;
+            if (this.isDecimalPointUsed){
+                this.decimalPart = this.decimalPart / 10;
+                this.currentNumber = this.currentNumber + num * this.decimalPart;
+            }
+            else{
+                this.currentNumber = this.currentNumber * 10 + num;
+            }
         }
         this.notifySubscribers();
     };
 
     putOperator = (operator: Operators) => {
+        if (this.isDecimalPointUsed){
+            this.isDecimalPointUsed = false;
+            this.decimalPart = 1;
+        }
         // console.log(this.currentNumber)
         if (this.currentNumber !== null) {
             this.numbersArray.push(this.currentNumber);
@@ -72,9 +86,12 @@ export default class Calculator {
     };
 
     putDecimal = () => {
-        // if (this.data[this.data.length - 1] !== '.') {
-        //     this.data += '.';
-        // }
+        this.isDecimalPointUsed = true;
+
+        if (this.currentNumber === null){
+            this.currentNumber = 0;
+        }
+
         this.notifySubscribers();
     };
 
@@ -101,6 +118,8 @@ export default class Calculator {
 
     reset = () => {
         this.numbersArray = [];
+        this.isDecimalPointUsed = false;
+        this.decimalPart = 1;
         this.operatorsArray = [];
         this.currentNumber = null;
         this.currentOperator = null;
