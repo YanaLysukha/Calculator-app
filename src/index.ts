@@ -4,12 +4,15 @@ import Keys from './components/keys';
 import './style.scss';
 import ThemeManager from './components/ThemeManager';
 
-const updateTheme = ()=> {
+const updateTheme = () => {
     document.body.classList.toggle('light');
     document.body.classList.toggle('dark');
-}
+};
 
-const calculatorWrapper = new BaseElement<HTMLDivElement>({ tag: 'div', class: 'calculator-wrapper' });
+const calculatorWrapper = new BaseElement<HTMLDivElement>({
+    tag: 'div',
+    class: 'calculator-wrapper',
+});
 const display = new Display();
 const keys = new Keys();
 const themeManager = ThemeManager.getInstance();

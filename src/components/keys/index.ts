@@ -46,10 +46,10 @@ export default class Keys extends BaseElement<HTMLElement> {
         this.calculator.calculate();
     };
 
-    updateTheme = ()=> {
+    updateTheme = () => {
         this.node.classList.toggle('light');
         this.node.classList.toggle('dark');
-    }
+    };
 
     keysConfig: {
         label: string;

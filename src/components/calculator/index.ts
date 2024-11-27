@@ -57,11 +57,10 @@ export default class Calculator {
         if (this.currentNumber === null) {
             this.currentNumber = num;
         } else {
-            if (this.isDecimalPointUsed){
+            if (this.isDecimalPointUsed) {
                 this.decimalPart = this.decimalPart / 10;
                 this.currentNumber = this.currentNumber + num * this.decimalPart;
-            }
-            else{
+            } else {
                 this.currentNumber = this.currentNumber * 10 + num;
             }
         }
@@ -69,7 +68,7 @@ export default class Calculator {
     };
 
     putOperator = (operator: Operators) => {
-        if (this.isDecimalPointUsed){
+        if (this.isDecimalPointUsed) {
             this.isDecimalPointUsed = false;
             this.decimalPart = 1;
         }
@@ -88,7 +87,7 @@ export default class Calculator {
     putDecimal = () => {
         this.isDecimalPointUsed = true;
 
-        if (this.currentNumber === null){
+        if (this.currentNumber === null) {
             this.currentNumber = 0;
         }
 
@@ -106,7 +105,7 @@ export default class Calculator {
             if (this.operatorsArray[i]) {
                 data += `${this.operatorsArray[i]}`;
             }
-        })
+        });
         if (this.currentOperator) {
             data += `${this.currentOperator}`;
         }
@@ -148,17 +147,17 @@ export default class Calculator {
         const operators = [...this.operatorsArray];
 
         for (let i = 0; i < operators.length; ) {
-            if (operators[i] === "*" || operators[i] === "/" || operators[i] === "%") {
+            if (operators[i] === '*' || operators[i] === '/' || operators[i] === '%') {
                 const result = this.doOperations(numbers[i], operators[i], numbers[i + 1]);
                 numbers.splice(i, 2, result);
                 operators.splice(i, 1);
             } else {
-                i+=1;
+                i += 1;
             }
         }
 
         let result = numbers[0];
-        for (let i = 0; i < operators.length; i+=1) {
+        for (let i = 0; i < operators.length; i += 1) {
             result = this.doOperations(result, operators[i], numbers[i + 1]);
         }
 
@@ -193,7 +192,7 @@ export default class Calculator {
                 break;
             case '%':
                 if (num2 === 0) {
-                    console.error("Cannot calculate percentage with divisor 0!");
+                    console.error('Cannot calculate percentage with divisor 0!');
                     result = 0;
                 } else {
                     result = num1 * (num2 / 100);
@@ -204,5 +203,5 @@ export default class Calculator {
         }
 
         return result;
-    }
+    };
 }

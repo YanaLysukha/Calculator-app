@@ -21,8 +21,8 @@ export default class Display extends BaseElement<HTMLElement> {
         this.node.textContent = str;
     };
 
-    updateTheme = ()=> {
+    updateTheme = () => {
         this.node.classList.toggle('light');
         this.node.classList.toggle('dark');
-    }
+    };
 }

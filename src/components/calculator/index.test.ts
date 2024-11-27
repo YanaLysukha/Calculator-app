@@ -11,7 +11,7 @@ describe('calculator module', () => {
     describe('check putNumber method', () => {
         test('should append the number to the internal data', () => {
             calculator.putNumber(3);
-            calculator.putOperator('+')
+            calculator.putOperator('+');
             calculator.putNumber(2);
             expect(calculator.getData()).toBe('3+2');
         });
@@ -75,12 +75,12 @@ describe('calculator module', () => {
             calculator.putNumber(0);
             calculator.putOperator('+');
             expect(calculator.getData()).toBe('0+');
-        })
+        });
 
         test('should not display operator that is entered first ', () => {
             calculator.putOperator('*');
             expect(calculator.getData()).toBe('');
-        })
+        });
     });
 
     describe('check invertSign method', () => {
@@ -91,7 +91,7 @@ describe('calculator module', () => {
             calculator.putNumber(5);
             calculator.invertSign();
             expect(calculator.getData()).toBe('-23*-5');
-        })
+        });
 
         test('should invert sign correctly', () => {
             calculator.putNumber(23);
@@ -103,7 +103,7 @@ describe('calculator module', () => {
             expect(calculator.getData()).toBe('20');
             calculator.invertSign();
             expect(calculator.getData()).toBe('-20');
-        })
+        });
     });
 
     describe('check calculate method', () => {
@@ -160,12 +160,12 @@ describe('calculator module', () => {
             calculator.putNumber(0);
             calculator.calculate();
             expect(calculator.getData()).toBe('0');
-        })
+        });
 
         test('should not show something when there is no data', () => {
             calculator.calculate();
             expect(calculator.getData()).toBe('');
-        })
+        });
 
         test('should divide correctly', () => {
             calculator.putNumber(5);
@@ -173,7 +173,7 @@ describe('calculator module', () => {
             calculator.putNumber(2);
             calculator.calculate();
             expect(calculator.getData()).toBe('2.5');
-        })
+        });
 
         test('should show error message after dividing by zero', () => {
             calculator.putNumber(5);
@@ -181,6 +181,6 @@ describe('calculator module', () => {
             calculator.putNumber(0);
             calculator.calculate();
             expect(calculator.getData()).toBe('Error!');
-        })
+        });
     });
 });
