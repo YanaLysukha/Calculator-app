@@ -13,6 +13,8 @@ export default class Calculator {
 
     private currentOperator: Operators | null;
 
+    private showError: boolean = false;
+
     private constructor() {
         this.subscribers = [];
         this.operatorsArray = [];
@@ -41,6 +43,9 @@ export default class Calculator {
     };
 
     putNumber = (num: number) => {
+        if (this.showError) {
+            this.reset();
+        }
         if (this.currentOperator) {
             this.operatorsArray.push(this.currentOperator);
             this.currentOperator = null;
@@ -74,6 +79,10 @@ export default class Calculator {
     };
 
     getData = () => {
+        if (this.showError) {
+            return 'Error!';
+        }
+
         let data: string = '';
         this.numbersArray.forEach((num, i) => {
             data += `${num}`;
@@ -95,6 +104,7 @@ export default class Calculator {
         this.operatorsArray = [];
         this.currentNumber = null;
         this.currentOperator = null;
+        this.showError = false;
         this.notifySubscribers();
     };
 
@@ -133,8 +143,10 @@ export default class Calculator {
             result = this.doOperations(result, operators[i], numbers[i + 1]);
         }
 
-        this.reset();
-        this.numbersArray.push(result);
+        if (!this.showError) {
+            this.reset();
+            this.numbersArray.push(result);
+        }
 
         this.notifySubscribers();
     };
@@ -157,7 +169,7 @@ export default class Calculator {
                     result = num1 / num2;
                 } else {
                     console.error('Division by zero is not allowed!');
-                    result = 0;
+                    this.showError = true;
                 }
                 break;
             case '%':

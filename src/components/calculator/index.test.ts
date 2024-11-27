@@ -168,5 +168,13 @@ describe('calculator module', () => {
             calculator.calculate();
             expect(calculator.getData()).toBe('2.5');
         })
+
+        test('should show error message after dividing by zero', () => {
+            calculator.putNumber(5);
+            calculator.putOperator('/');
+            calculator.putNumber(0);
+            calculator.calculate();
+            expect(calculator.getData()).toBe('Error!');
+        })
     });
 });
