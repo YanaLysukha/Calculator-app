@@ -4,6 +4,9 @@
 
 [Click here to view the assignment](https://docs.google.com/document/d/1zpXXeSae-BlcxPKgw3DhxZA92cspVailrPYoaXSYrW8/edit?tab=t.0)
 
+## Deploy link
+[click here](https://calculator-app-yanina.netlify.app/)
+
 ## How to run the app
 
 ### Prerequisites
